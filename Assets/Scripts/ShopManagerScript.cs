@@ -10,11 +10,21 @@ public class ShopManagerScript : MonoBehaviour
     public int[,] shopItems = new int[5,5];
     public float coins;
     public Text CoinsTXT;
-
+    
 
     void Start()
     {
-        CoinsTXT.text = "Coins:" + coins.ToString();
+        if (PlayerPrefs.HasKey("coins"))
+        {
+            coins = PlayerPrefs.GetFloat("coins");
+            CoinsTXT.text = "Coins:" + coins.ToString();
+            //CoinsTXT.text = this.coins.ToString() + "$";
+        }
+        else
+        {
+            coins = 1000;
+            CoinsTXT.text = "Coins:" + coins.ToString();
+        }
 
         //ID's
         shopItems[1, 1] = 1;
@@ -44,6 +54,7 @@ public class ShopManagerScript : MonoBehaviour
         if (coins >= shopItems[2, ButtonRef.GetComponent<ButtonInfo>().ItemID])
         {
             coins -= shopItems[2, ButtonRef.GetComponent<ButtonInfo>().ItemID];
+            PlayerPrefs.SetFloat("coins", coins);
             shopItems[3, ButtonRef.GetComponent<ButtonInfo>().ItemID]++;
             CoinsTXT.text = "Coins:" + coins.ToString();
             ButtonRef.GetComponent<ButtonInfo>().QuantityTxt.text = shopItems[3, ButtonRef.GetComponent<ButtonInfo>().ItemID].ToString();
