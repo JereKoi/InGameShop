@@ -10,10 +10,12 @@ public class ShopManagerScript : MonoBehaviour
     public int[,] shopItems = new int[5,5];
     public float coins;
     public Text CoinsTXT;
+    public static ShopManagerScript Instance;
     
 
     void Start()
     {
+        Instance = this;
         if (PlayerPrefs.HasKey("coins"))
         {
             coins = PlayerPrefs.GetFloat("coins");
@@ -60,7 +62,5 @@ public class ShopManagerScript : MonoBehaviour
             ButtonRef.GetComponent<ButtonInfo>().QuantityTxt.text = shopItems[3, ButtonRef.GetComponent<ButtonInfo>().ItemID].ToString();
 
         }
-
-
     }
 }
